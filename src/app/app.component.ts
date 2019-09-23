@@ -7,5 +7,5 @@ import { Component, ChangeDetectionStrategy } from '@angular/core';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class AppComponent {
-  title = 'Behavior Subject Demo';
+  title = 'RXJS Behavior Subject as State Demo';
 }

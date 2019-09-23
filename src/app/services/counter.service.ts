@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { Observable } from 'rxjs/Observable';
 
-interface Count {
+export interface Count {
   value: number;
 }
 
@@ -12,11 +12,11 @@ export class CounterService {
   constructor() { }
 
   private initialCount: Count = {value: 0};
-  private countTracker = new BehaviorSubject<Count>(this.initialCount);
+  private counterState = new BehaviorSubject<Count>(this.initialCount);
 
   /** Allows subscription to the behavior subject as an observable */
   getCount(): Observable<Count> {
-    return this.countTracker.asObservable();
+    return this.counterState.asObservable();
   }
 
   /**
@@ -25,11 +25,11 @@ export class CounterService {
    * @param delta a number representing the positive or negative change in current value
    */
   setCount(val: number, delta: number): void {
-    this.countTracker.next({value: (val + delta)});
+    this.counterState.next({value: (val + delta)});
   }
 
   /** Resets the count to the initial value */
   resetCount(): void {
-    this.countTracker.next(this.initialCount);
+    this.counterState.next(this.initialCount);
   }
 }

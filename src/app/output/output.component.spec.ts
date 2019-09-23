@@ -1,6 +1,6 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-
 import { OutputComponent } from './output.component';
+import { CounterService } from '../services/counter.service';
 
 describe('OutputComponent', () => {
   let component: OutputComponent;
@@ -8,7 +8,12 @@ describe('OutputComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ OutputComponent ]
+      declarations: [
+        OutputComponent
+      ],
+      providers: [
+        CounterService
+      ]
     })
     .compileComponents();
   }));

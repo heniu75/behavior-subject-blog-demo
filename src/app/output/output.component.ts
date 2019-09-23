@@ -1,5 +1,6 @@
-import { Component, OnInit, Input, OnDestroy, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
-import { CounterService } from '../services/counter.service';
+import { Component, OnInit, Input, ChangeDetectionStrategy } from '@angular/core';
+import { CounterService, Count } from '../services/counter.service';
+import { Observable } from 'rxjs/Observable';
 
 @Component({
   selector: 'app-output',
@@ -7,28 +8,16 @@ import { CounterService } from '../services/counter.service';
   styleUrls: ['./output.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class OutputComponent implements OnInit, OnDestroy {
+export class OutputComponent implements OnInit {
 
-  constructor(private counter: CounterService, private changeDetector: ChangeDetectorRef) { }
+  constructor(private counter: CounterService) {}
 
-  @Input() text: string;
-  currentCount: number;
-  subscription;
+  @Input()
+  public text: string;
+
+  currentCount$: Observable<Count>;
 
   ngOnInit(): void {
-    this.subscription = this.counter.getCount().subscribe(
-      res => {
-        // detect changes for this component and children
-        this.changeDetector.detectChanges();
-        this.currentCount = res.value;
-      },
-      err => {
-        console.error(`An error occurred: ${err.message}`);
-      }
-    );
-  }
-
-  ngOnDestroy(): void {
-    this.subscription.unsubscribe();
+    this.currentCount$ = this.counter.getCount();
   }
 }
